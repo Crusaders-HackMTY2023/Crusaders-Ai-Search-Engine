@@ -147,9 +147,9 @@ def main():
     chatbot = initialize_chatbot()
     print("Bienvenido al Chatbot de crusaders, escriba su pregunta o teclee q para salir en cualquier momento")
     print(" ")
-    auxiliar = readPDF("ResearchCovid.pdf")
-    response = get_chatbot_response("Resume el siguiente texto: " + auxiliar, chatbot)
-    print(response)
+    # auxiliar = readPDF("ResearchCovid.pdf")
+    # response = get_chatbot_response("Resume el siguiente texto: " + auxiliar, chatbot)
+    # print(response)
     
     while True:
         user_input = input()
