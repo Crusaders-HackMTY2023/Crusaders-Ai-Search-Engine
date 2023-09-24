@@ -12,11 +12,11 @@ equipo = [
     },
     {
         "nombre": "Pedro Sánchez",
-        "linkedin": "https://www.linkedin.com/in/carlosrodriguez/",
+        "linkedin": "https://www.linkedin.com/in/pedro-gabriel-sánchez-valdez-27ba52251//",
     },
     {
         "nombre": "Emilio Domínguez",
-        "linkedin": "https://www.linkedin.com/in/marialopez/",
+        "linkedin": "https://www.linkedin.com/in/emiliodmoreno/",
     }
 ]
 
