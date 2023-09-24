@@ -74,9 +74,91 @@ def initialize_chatbot():
 
     chatbot = Chatbot(
         model=model,
-        cache=cache,
+        #cache=cache,
         #filters=filters,
         #description="You are a polite and very helpful assistant",
     )
     
     return chatbot
+"""
+def get_chatbot_response(question, chatbot):
+    response = chatbot.chat(
+        question,
+        cache_kwargs={"namespace": "chatbot-cache-test"},
+        print_cache_score=False,
+    )
+    
+    return response.message.content
+"""
+
+
+"""
+def get_chatbot_response(question, chatbot, max_attempts=5):
+    attempts = 0
+    
+    while attempts < max_attempts:
+        try:
+            response = chatbot.chat(
+                question,
+                cache_kwargs={"namespace": "chatbot-cache-test"},
+                print_cache_score=False,
+            )
+            return response.message.content
+        except Exception as e:
+            attempts += 1
+            print(f"Error (intentos restantes: {max_attempts - attempts}): {str(e)}")
+    
+    return "Se agotaron los intentos. No se pudo obtener una respuesta del chatbot."
+"""
+    
+
+def get_chatbot_response(question, chatbot):
+    try:
+        # Redirigir la salida estándar a response_buffer
+        response_buffer = io.StringIO()
+        sys.stdout = response_buffer
+        response = chatbot.chat(
+            question,
+            cache_kwargs={"namespace": "chatbot-cache-test"},
+            print_cache_score=True,
+            
+        )
+        sys.stdout = sys.__stdout__
+
+        return response.message.content
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return "Ocurrió un error al obtener la respuesta del chatbot."
+
+def readPDF(fileName):
+    loader = PyPDFLoader(fileName)
+    pages = loader.load_and_split()
+
+    stringTemp=""
+
+    for i in range(len(pages)):
+        #print(pages[i].__str__())
+        stringTemp+=pages[i].__str__()
+    
+    return stringTemp
+
+
+def main():
+    chatbot = initialize_chatbot()
+    print("Bienvenido al Chatbot de crusaders, escriba su pregunta o teclee q para salir en cualquier momento")
+    print(" ")
+    auxiliar = readPDF("ResearchCovid.pdf")
+    response = get_chatbot_response("Resume el siguiente texto: " + auxiliar, chatbot)
+    print(response)
+    
+    while True:
+        user_input = input()
+        if user_input.lower() == 'q':
+            break
+        
+        response = get_chatbot_response(user_input, chatbot)
+        print(response)
+        print(" ")
+
+if __name__ == "__main__":
+    main()
